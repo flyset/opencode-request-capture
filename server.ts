@@ -104,7 +104,8 @@ async function nextRequestNumber(directory: string) {
   return maximum + 1
 }
 
-const ContextInspectorServer: Plugin = async ({ directory }) => {
+const ContextInspectorServer: Plugin = async ({ directory }, options) => {
+  const enabled = options?.enabled === true
   const requestsRoot = join(directory, ".opencode", "requests")
   const originalFetch = globalThis.fetch
   const queues = new Map<string, Promise<void>>()
@@ -150,6 +151,8 @@ const ContextInspectorServer: Plugin = async ({ directory }) => {
   }
 
   const interceptedFetch: typeof globalThis.fetch = (async (input, init) => {
+    if (!enabled) return originalFetch.call(globalThis, input, init)
+
     let request: Request
     try {
       request = new Request(input, init)
