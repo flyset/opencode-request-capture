@@ -1,9 +1,9 @@
-# OpenCode Context Inspector
+# OpenCode Request Capture
 
-The Context Inspector is an OpenCode server plugin that captures the provider
-requests sent during model inference. It records the provider-native request so
-you can inspect the messages, tools, model options, and other data that
-OpenCode actually sends to the model provider.
+OpenCode Request Capture is an OpenCode server plugin that captures the
+provider requests sent during model inference. It records the provider-native
+request so you can inspect the messages, tools, model options, and other data
+that OpenCode actually sends to the model provider.
 
 ## What It Does
 
@@ -25,7 +25,7 @@ conversation history, compaction behavior, or model responses.
 The server plugin entry point is:
 
 ```text
-plugins/context-inspector/server.ts
+plugins/opencode-request-capture/server.ts
 ```
 
 Captured requests are written under the active OpenCode working directory:
@@ -61,7 +61,7 @@ Register the plugin with the explicit `enabled: true` option in
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
     [
-      "./plugins/context-inspector/server.ts",
+      "./plugins/opencode-request-capture/server.ts",
       {
         "enabled": true
       }
@@ -81,7 +81,7 @@ Keep the plugin loaded but disable capture with:
 {
   "plugin": [
     [
-      "./plugins/context-inspector/server.ts",
+      "./plugins/opencode-request-capture/server.ts",
       {
         "enabled": false
       }
@@ -94,7 +94,7 @@ Omitting the option also disables capture:
 
 ```json
 {
-  "plugin": ["./plugins/context-inspector/server.ts"]
+  "plugin": ["./plugins/opencode-request-capture/server.ts"]
 }
 ```
 

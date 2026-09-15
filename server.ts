@@ -104,7 +104,7 @@ async function nextRequestNumber(directory: string) {
   return maximum + 1
 }
 
-const ContextInspectorServer: Plugin = async ({ directory }, options) => {
+const RequestCaptureServer: Plugin = async ({ directory }, options) => {
   const enabled = options?.enabled === true
   const requestsRoot = join(directory, ".opencode", "requests")
   const originalFetch = globalThis.fetch
@@ -143,7 +143,7 @@ const ContextInspectorServer: Plugin = async ({ directory }, options) => {
         })
       })
       .catch((error) => {
-        console.error("Context inspector request capture failed:", error)
+        console.error("Request capture failed:", error)
       })
 
     queues.set(sessionID, next)
@@ -165,7 +165,7 @@ const ContextInspectorServer: Plugin = async ({ directory }, options) => {
     if (safeID) {
       enqueue(safeID, request, readBody(request))
     } else if (sessionID) {
-      console.error("Context inspector skipped a request with an unsafe session ID.")
+      console.error("Request capture skipped a request with an unsafe session ID.")
     }
 
     return originalFetch.call(globalThis, request)
@@ -180,4 +180,4 @@ const ContextInspectorServer: Plugin = async ({ directory }, options) => {
   }
 }
 
-export default ContextInspectorServer
+export default RequestCaptureServer
